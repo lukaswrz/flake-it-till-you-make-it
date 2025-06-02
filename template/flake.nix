@@ -13,6 +13,9 @@
       url = "github:numtide/treefmt-nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    # FIXME: Uncomment these if services are needed.
+    # inputs.process-compose.url = "github:Platonic-Systems/process-compose-flake";
+    # inputs.services.url = "github:juspay/services-flake";
   };
 
   outputs =
@@ -22,11 +25,16 @@
       flake-parts,
       hooks,
       treefmt,
+      # FIXME: Uncomment these if services are needed.
+      # process-compose,
+      # services,
     }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } {
       imports = [
         hooks.flakeModule
         treefmt.flakeModule
+        # FIXME: Uncomment this if services are needed.
+        # inputs.process-compose.flakeModule
       ];
 
       systems = nixpkgs.lib.systems.flakeExposed;
@@ -63,6 +71,13 @@
 
           # FIXME: Uncomment this if the flake should export a package.
           # packages.default = pkgs.callPackage ./package.nix {};
+
+          # FIXME: Uncomment this if services are needed.
+          # process-compose.myservices = {
+          #   imports = [
+          #     inputs.services.processComposeModules.default
+          #   ];
+          # };
         };
 
       flake = {
